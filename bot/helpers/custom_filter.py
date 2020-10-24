@@ -16,13 +16,10 @@
 
 from pyrogram import filters
 from pyrogram.types import Message
-from bot.bot import Bot
-from bot.helpers.custom_filter import allowed_chat_filter
 
 
-@Bot.on_message(
-    filters.command("delall") &
-    allowed_chat_filter
-)
-async def del_all_command_fn(client: Bot, message: Message):
-    await message.reply_text("delall")
+async def allowed_chat_filter_fn(_, __, m: Message):
+    return bool(m.chat and m.chat.type in {"channel", "supergroup"})
+
+
+allowed_chat_filter = filters.create(allowed_chat_filter_fn)
