@@ -16,14 +16,28 @@
 
 from pyrogram import filters
 from pyrogram.types import Message
+from bot import (
+    AKTIFPERINTAH,
+    DEL_FROM_COMMAND
+)
 from bot.bot import Bot
 from bot.helpers.custom_filter import allowed_chat_filter
 
 
 @Bot.on_message(
-    filters.command("delfrom") &
+    filters.command(DEL_FROM_COMMAND) &
     filters.reply &
     allowed_chat_filter
 )
 async def del_from_command_fn(client: Bot, message: Message):
-    await message.reply_text("delfrom")
+    status_message = await message.reply_text(
+        "trying to save starting message_id"
+    )
+    if message.chat.id not in AKTIFPERINTAH:
+        AKTIFPERINTAH[message.chat.id] = {}
+    AKTIFPERINTAH[message.chat.id][DEL_FROM_COMMAND] = message.reply_to_message.message_id
+    await status_message.edit_text(
+        "saved starting message_id. https://github.com/SpEcHiDe/DeleteMessagesRoBot"
+    )
+    await message.delete()
+    await status_message.delete()

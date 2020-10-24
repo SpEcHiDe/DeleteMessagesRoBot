@@ -29,7 +29,7 @@ load_dotenv("config.env")
 # The Telegram API things
 # Get these values from my.telegram.org or Telegram: @useTGxBot
 API_HASH = get_config("API_HASH", should_prompt=True)
-APP_ID = get_config("APP_ID", should_prompt=True)
+APP_ID = int(get_config("APP_ID", should_prompt=True))
 # get a token from @BotFather
 TG_BOT_TOKEN = get_config("TG_BOT_TOKEN", should_prompt=True)
 # string session for running as user
@@ -45,6 +45,12 @@ TG_BOT_SESSION = get_config("TG_BOT_SESSION", "bot")
 TG_BOT_WORKERS = int(get_config("TG_BOT_WORKERS", "4"))
 # path to store LOG files
 LOG_FILE_ZZGEVC = get_config("LOG_FILE_ZZGEVC", "MessageDeletErBot.log")
+# number of messages that can be deleted in One Request, in Telegram
+TG_MAX_SEL_MESG = int(get_config("TG_MAX_SEL_MESG", 99))
+TG_MIN_SEL_MESG = int(get_config("TG_MIN_SEL_MESG", 0))
+# a dictionary to store the currently running processes
+AKTIFPERINTAH = {}
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -65,3 +71,35 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 def LOGGER(name: str) -> logging.Logger:
     """ get a Logger object """
     return logging.getLogger(name)
+
+
+REQD_PERMISSIONS = "https://t.me/SpEcHlDe/857"
+GIT_REPO_LINK = "https://github.com/SpEcHiDe/DeleteMessagesRoBot"
+""" strings to be used in the bot """
+START_MESSAGE = get_config("START_MESSAGE", (
+    "I'm a bot that can delete all your channel or supergroup messages. "
+    "\n\n"
+    f"To use me: read 👉 {REQD_PERMISSIONS} 👈"
+    "\n\n"
+    f"In case of issues, contact 👉 {GIT_REPO_LINK} 👈"
+))
+START_COMMAND = get_config("START_COMMAND", "start")
+DEL_ALL_COMMAND = get_config("DEL_ALL_COMMAND", "delall")
+BEGINNING_DEL_ALL_MESSAGE = get_config("BEGINNING_DEL_ALL_MESSAGE", (
+    "trying to delete all messages"
+))
+IN_CORRECT_PERMISSIONS_MESSAGE = get_config("IN_CORRECT_PERMISSIONS_MESSAGE", (
+    "something went wrong. "
+    "please verify <a href='{REQD_PERMISSIONS}'>all permissions</a>, "
+    "and try again after sometime."
+))
+SEL_DEL_COMMAND = get_config("SEL_DEL_COMMAND", "seldel")
+BEGINNING_SEL_DEL_MESSAGE = get_config("BEGINNING_SEL_DEL_MESSAGE", (
+    "trying to delete your selected messages"
+))
+DEL_FROM_COMMAND = get_config("DEL_FROM_COMMAND", "delfrom")
+DEL_TO_COMMAND = get_config("DEL_TO_COMMAND", "delto")
+NOT_USED_DEL_FROM_DEL_TO_MESSAGE = get_config("NOT_USED_DEL_FROM_DEL_TO_MESSAGE", (
+    f"please use /{DEL_FROM_COMMAND} or /{DEL_TO_COMMAND} "
+    f"before using /{SEL_DEL_COMMAND}"
+))

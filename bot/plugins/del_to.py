@@ -17,20 +17,27 @@
 from pyrogram import filters
 from pyrogram.types import Message
 from bot import (
-    START_COMMAND,
-    START_MESSAGE
+    AKTIFPERINTAH,
+    DEL_TO_COMMAND
 )
 from bot.bot import Bot
+from bot.helpers.custom_filter import allowed_chat_filter
 
 
 @Bot.on_message(
-    filters.command(START_COMMAND) &
-    filters.private
+    filters.command(DEL_TO_COMMAND) &
+    filters.reply &
+    allowed_chat_filter
 )
-async def start_command_fn(_, message: Message):
-    await message.reply_text(
-        text=START_MESSAGE,
-        quote=True,
-        disable_web_page_preview=True,
-        disable_notification=True
+async def del_to_command_fn(client: Bot, message: Message):
+    status_message = await message.reply_text(
+        "trying to save ending message_id"
     )
+    if message.chat.id not in AKTIFPERINTAH:
+        AKTIFPERINTAH[message.chat.id] = {}
+    AKTIFPERINTAH[message.chat.id][DEL_TO_COMMAND] = message.reply_to_message.message_id
+    await status_message.edit_text(
+        "saved ending message_id. https://github.com/SpEcHiDe/DeleteMessagesRoBot"
+    )
+    await message.delete()
+    await status_message.delete()

@@ -17,22 +17,26 @@
 from pyrogram import filters
 from pyrogram.types import Message
 from bot import (
-    BEGINNING_DEL_ALL_MESSAGE,
-    DEL_ALL_COMMAND,
-    IN_CORRECT_PERMISSIONS_MESSAGE
+    AKTIFPERINTAH,
+    BEGINNING_SEL_DEL_MESSAGE,
+    DEL_FROM_COMMAND,
+    DEL_TO_COMMAND,
+    IN_CORRECT_PERMISSIONS_MESSAGE,
+    NOT_USED_DEL_FROM_DEL_TO_MESSAGE,
+    SEL_DEL_COMMAND
 )
 from bot.bot import Bot
 from bot.helpers.custom_filter import allowed_chat_filter
-from bot.helpers.get_messages import get_messages
 from bot.helpers.make_user_join_chat import make_chat_user_join
+from bot.helpers.get_messages import get_messages
 
 
 @Bot.on_message(
-    filters.command(DEL_ALL_COMMAND) &
+    filters.command(SEL_DEL_COMMAND) &
     allowed_chat_filter
 )
-async def del_all_command_fn(client: Bot, message: Message):
-    status_message = await message.reply_text(BEGINNING_DEL_ALL_MESSAGE)
+async def del_selective_command_fn(client: Bot, message: Message):
+    status_message = await message.reply_text(BEGINNING_SEL_DEL_MESSAGE)
 
     chat_invite_link = await client.export_chat_invite_link(message.chat.id)
 
@@ -46,12 +50,23 @@ async def del_all_command_fn(client: Bot, message: Message):
         await status_message.edit_text(IN_CORRECT_PERMISSIONS_MESSAGE)
         return
 
+    current_selections = AKTIFPERINTAH.get(message.chat.id)
+    if not current_selections:
+        await status_message.edit(NOT_USED_DEL_FROM_DEL_TO_MESSAGE)
+        return
+
     await get_messages(
         client.USER,
         message.chat.id,
-        0,
-        status_message.message_id
+        current_selections.get(DEL_FROM_COMMAND),
+        current_selections.get(DEL_TO_COMMAND),
     )
+    try:
+        await status_message.delete()
+        await message.delete()
+    except:
+        pass
+    del AKTIFPERINTAH[message.chat.id]
 
     # leave the chat, after task is done
     await client.USER.leave_chat(message.chat.id)

@@ -34,6 +34,7 @@ from .user import User
 class Bot(Client):
     """ modded client for MessageDeletERoBot """
     USER: User = None
+    USER_ID: int = None
 
     def __init__(self):
         super().__init__(
@@ -55,7 +56,9 @@ class Bot(Client):
         self.LOGGER(__name__).info(
             f"@{usr_bot_me.username} based on Pyrogram v{__version__} "
         )
-        self.USER = await User().start()
+        self.USER, self.USER_ID = await User().start()
+        # hack to get the entities in-memory
+        await self.USER.send_message(usr_bot_me.username, "this is a hack")
 
     async def stop(self, *args):
         await super().stop()

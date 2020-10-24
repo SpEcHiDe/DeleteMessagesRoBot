@@ -48,6 +48,7 @@ class User(Client):
         self.LOGGER(__name__).info(
             f"@{usr_bot_me.username} based on Pyrogram v{__version__} "
         )
+        return (self, usr_bot_me.id)
 
     async def stop(self, *args):
         await super().stop()
