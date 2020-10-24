@@ -1,0 +1,43 @@
+{
+    "name": "Message DeletEr Bot",
+    "description": "Modular  Telegram Bot powered by @PyroGram!",
+    "keywords": [
+        "telegram",
+        "bot",
+        "plugin",
+        "modular",
+        "productivity",
+        "delete",
+        "channel",
+        "administrators",
+        "messages"
+    ],
+    "repository": "https://github.com/SpEcHiDe/DeleteMessagesRoBot",
+    "website": "https://telegram.dog/SpEcHlDe",
+    "success_url": "https://t.me/SpEcHlDe/857",
+    "env": {
+        "APP_ID": {
+            "description": "Get this value from my.telegram.org! Please do not steal"
+        },
+        "API_HASH": {
+            "description": "Get this value from my.telegram.org! Please do not steal"
+        },
+        "TG_BOT_TOKEN": {
+            "description": "Obtain a Telegram bot token by contacting @BotFather"
+        },
+        "TG_USER_SESSION": {
+            "description": "Create a PyroGram User Session, using https://generatestringsession.spechide.repl.run/"
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
+    }
+}
