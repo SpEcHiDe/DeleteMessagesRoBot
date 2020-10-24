@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-""" MtProto Bot """
+""" MtProto User """
 
 from pyrogram import (
     Client,
@@ -32,13 +32,12 @@ from . import (
 class User(Client):
     """ modded client for MessageDeletER """
 
-    def __init__(self, **kwargs):
+    def __init__(self):
         super().__init__(
             TG_USER_SESSION,
             api_hash=API_HASH,
             api_id=APP_ID,
-            workers=TG_BOT_WORKERS,
-            **kwargs
+            workers=TG_BOT_WORKERS
         )
         self.LOGGER = LOGGER
 

@@ -24,6 +24,7 @@ from . import (
     API_HASH,
     APP_ID,
     LOGGER,
+    TG_BOT_SESSION,
     TG_BOT_TOKEN,
     TG_BOT_WORKERS
 )
@@ -34,8 +35,9 @@ class Bot(Client):
     """ modded client for MessageDeletERoBot """
     USER: User = None
 
-    def __init__(self, **kwargs):
+    def __init__(self):
         super().__init__(
+            TG_BOT_SESSION,
             api_hash=API_HASH,
             api_id=APP_ID,
             plugins={
