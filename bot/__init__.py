@@ -89,8 +89,10 @@ BEGINNING_DEL_ALL_MESSAGE = get_config("BEGINNING_DEL_ALL_MESSAGE", (
     "trying to delete all messages"
 ))
 IN_CORRECT_PERMISSIONS_MESSAGE = get_config("IN_CORRECT_PERMISSIONS_MESSAGE", (
-    "something went wrong. "
-    "please verify <a href='{REQD_PERMISSIONS}'>all permissions</a>, "
+    "something went wrong. \n\n"
+    "<code>{}</code>"
+    "\n\n"
+    f"please verify <a href='{REQD_PERMISSIONS}'>all permissions</a>, "
     "and try again after sometime."
 ))
 SEL_DEL_COMMAND = get_config("SEL_DEL_COMMAND", "seldel")

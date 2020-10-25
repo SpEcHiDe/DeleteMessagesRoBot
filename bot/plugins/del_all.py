@@ -34,16 +34,17 @@ from bot.helpers.make_user_join_chat import make_chat_user_join
 async def del_all_command_fn(client: Bot, message: Message):
     status_message = await message.reply_text(BEGINNING_DEL_ALL_MESSAGE)
 
-    chat_invite_link = await client.export_chat_invite_link(message.chat.id)
-
-    s__ = await make_chat_user_join(
+    s__, nop = await make_chat_user_join(
         client.USER,
-        chat_invite_link,
         client.USER_ID,
         message
     )
     if not s__:
-        await status_message.edit_text(IN_CORRECT_PERMISSIONS_MESSAGE)
+        await status_message.edit_text(
+            IN_CORRECT_PERMISSIONS_MESSAGE.format(
+                nop
+            )
+        )
         return
 
     await get_messages(
