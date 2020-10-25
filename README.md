@@ -14,3 +14,12 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 * [ThankTelegram](https://telegram.dog/ThankTelegram)
 * [Dan Tès](https://telegram.dog/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
 * [Manuel15](https://telegram.dog/manuei15) for his [DelAllBot](https://telegram.dog/delall_bot)
+
+
+### Current Features
+- The below `README.md` assumes the default values for the optional variables in the `sample_config.env`.
+
+
+- `/delall` command to delete all messages in the channel.
+
+- `/seldel` command to **selectively** delete the messages in the channel.
