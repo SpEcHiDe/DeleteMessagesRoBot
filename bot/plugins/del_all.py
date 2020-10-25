@@ -43,7 +43,8 @@ async def del_all_command_fn(client: Bot, message: Message):
         await status_message.edit_text(
             IN_CORRECT_PERMISSIONS_MESSAGE.format(
                 nop
-            )
+            ),
+            disable_web_page_preview=True
         )
         return
 
@@ -51,7 +52,8 @@ async def del_all_command_fn(client: Bot, message: Message):
         client.USER,
         message.chat.id,
         0,
-        status_message.message_id
+        status_message.message_id,
+        []
     )
 
     # leave the chat, after task is done

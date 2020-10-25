@@ -105,3 +105,18 @@ NOT_USED_DEL_FROM_DEL_TO_MESSAGE = get_config("NOT_USED_DEL_FROM_DEL_TO_MESSAGE"
     f"please use /{DEL_FROM_COMMAND} or /{DEL_TO_COMMAND} "
     f"before using /{SEL_DEL_COMMAND}"
 ))
+TL_FILE_TYPES = (
+    "photo",
+    "animation",
+    "audio",
+    "document",
+    "video",
+    "video_note",
+    "voice",
+    # "contact",
+    # "dice",
+    # "poll",
+    # "location",
+    # "venue",
+    "sticker"
+)

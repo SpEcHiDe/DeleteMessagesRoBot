@@ -47,7 +47,8 @@ async def del_selective_command_fn(client: Bot, message: Message):
         await status_message.edit_text(
             IN_CORRECT_PERMISSIONS_MESSAGE.format(
                 nop
-            )
+            ),
+            disable_web_page_preview=True
         )
         return
 
@@ -56,11 +57,16 @@ async def del_selective_command_fn(client: Bot, message: Message):
         await status_message.edit(NOT_USED_DEL_FROM_DEL_TO_MESSAGE)
         return
 
+    flt_type = []
+    if len(message.command) > 1:
+        flt_type = message.command[1:]
+
     await get_messages(
         client.USER,
         message.chat.id,
         current_selections.get(DEL_FROM_COMMAND),
         current_selections.get(DEL_TO_COMMAND),
+        flt_type
     )
     try:
         await status_message.delete()
