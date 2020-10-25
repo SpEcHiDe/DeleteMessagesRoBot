@@ -46,6 +46,7 @@ async def get_messages(
                 chat_id,
                 messages_to_delete
             )
+            messages_to_delete = []
     # i don't know if there's a better way to delete messages
     if len(messages_to_delete) > TG_MIN_SEL_MESG:
         await mass_delete_messages(
@@ -53,3 +54,4 @@ async def get_messages(
             chat_id,
             messages_to_delete
         )
+        messages_to_delete = []
