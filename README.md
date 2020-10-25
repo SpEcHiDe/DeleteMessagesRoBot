@@ -6,6 +6,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 
+### [Video Tutorial 🎥](https://youtu.be/RHQ-RP4_pKY)
+
+
 ## Credits, and Thanks to
 
 * [ThankTelegram](https://telegram.dog/ThankTelegram)
