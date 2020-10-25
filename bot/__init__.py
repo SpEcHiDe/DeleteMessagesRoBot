@@ -120,5 +120,6 @@ TL_FILE_TYPES = (
     # "poll",
     # "location",
     # "venue",
-    "sticker"
+    "sticker",
+    "text"
 )
