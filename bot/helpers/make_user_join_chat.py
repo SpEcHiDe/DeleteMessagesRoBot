@@ -16,7 +16,6 @@
 
 
 from pyrogram.errors import (
-    ChatAdminRequired,
     InviteHashExpired,
     InviteHashInvalid,
     UserAlreadyParticipant

@@ -35,9 +35,14 @@ async def del_from_command_fn(client: Bot, message: Message):
     )
     if message.chat.id not in AKTIFPERINTAH:
         AKTIFPERINTAH[message.chat.id] = {}
-    AKTIFPERINTAH[message.chat.id][DEL_FROM_COMMAND] = message.reply_to_message.message_id
+    AKTIFPERINTAH[
+        message.chat.id
+    ][
+        DEL_FROM_COMMAND
+    ] = message.reply_to_message.message_id
     await status_message.edit_text(
-        "saved starting message_id. https://github.com/SpEcHiDe/DeleteMessagesRoBot"
+        "saved starting message_id. "
+        "https://github.com/SpEcHiDe/DeleteMessagesRoBot"
     )
     await message.delete()
     await status_message.delete()

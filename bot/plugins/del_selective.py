@@ -23,7 +23,8 @@ from bot import (
     DEL_TO_COMMAND,
     IN_CORRECT_PERMISSIONS_MESSAGE,
     NOT_USED_DEL_FROM_DEL_TO_MESSAGE,
-    SEL_DEL_COMMAND
+    SEL_DEL_COMMAND,
+    TL_FILE_TYPES
 )
 from bot.bot import Bot
 from bot.helpers.custom_filter import allowed_chat_filter
@@ -52,28 +53,50 @@ async def del_selective_command_fn(client: Bot, message: Message):
         )
         return
 
+    flt_type = []
+    if len(message.command) > 1:
+        _flt_type = message.command[1:]
+        for del_type in _flt_type:
+            _del_type = del_type.lower().strip()
+            if _del_type in TL_FILE_TYPES:
+                flt_type.append(_del_type)
+
     current_selections = AKTIFPERINTAH.get(message.chat.id)
-    if not current_selections:
+    if len(flt_type) == 0 and not current_selections:
         await status_message.edit(NOT_USED_DEL_FROM_DEL_TO_MESSAGE)
         return
 
-    flt_type = []
-    if len(message.command) > 1:
-        flt_type = message.command[1:]
+    try:
+        min_message_id = current_selections.get(
+            DEL_FROM_COMMAND
+        )
+    except AttributeError:
+        min_message_id = 0
+    try:
+        max_message_id = current_selections.get(
+            DEL_TO_COMMAND
+        )
+    except AttributeError:
+        max_message_id = status_message.message_id
 
     await get_messages(
         client.USER,
         message.chat.id,
-        current_selections.get(DEL_FROM_COMMAND),
-        current_selections.get(DEL_TO_COMMAND),
+        min_message_id,
+        max_message_id,
         flt_type
     )
+
     try:
         await status_message.delete()
         await message.delete()
     except:
         pass
-    del AKTIFPERINTAH[message.chat.id]
+
+    try:
+        del AKTIFPERINTAH[message.chat.id]
+    except KeyError:
+        pass
 
     # leave the chat, after task is done
     await client.USER.leave_chat(message.chat.id)

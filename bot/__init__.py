@@ -101,10 +101,12 @@ BEGINNING_SEL_DEL_MESSAGE = get_config("BEGINNING_SEL_DEL_MESSAGE", (
 ))
 DEL_FROM_COMMAND = get_config("DEL_FROM_COMMAND", "delfrom")
 DEL_TO_COMMAND = get_config("DEL_TO_COMMAND", "delto")
-NOT_USED_DEL_FROM_DEL_TO_MESSAGE = get_config("NOT_USED_DEL_FROM_DEL_TO_MESSAGE", (
-    f"please use /{DEL_FROM_COMMAND} or /{DEL_TO_COMMAND} "
-    f"before using /{SEL_DEL_COMMAND}"
-))
+NOT_USED_DEL_FROM_DEL_TO_MESSAGE = get_config(
+    "NOT_USED_DEL_FROM_DEL_TO_MESSAGE", (
+        f"please use /{DEL_FROM_COMMAND} or /{DEL_TO_COMMAND} "
+        f"before using /{SEL_DEL_COMMAND}"
+    )
+)
 TL_FILE_TYPES = (
     "photo",
     "animation",
