@@ -16,6 +16,9 @@
 
 from pyrogram import filters
 from pyrogram.types import Message
+from pyrogram.errors import (
+    ChatAdminRequired
+)
 from bot import (
     AKTIFPERINTAH,
     DEL_FROM_COMMAND
@@ -30,9 +33,12 @@ from bot.helpers.custom_filter import allowed_chat_filter
     allowed_chat_filter
 )
 async def del_from_command_fn(client: Bot, message: Message):
-    status_message = await message.reply_text(
-        "trying to save starting message_id"
-    )
+    try:
+        status_message = await message.reply_text(
+            "trying to save starting message_id"
+        )
+    except ChatAdminRequired:
+        status_message = None
     if message.chat.id not in AKTIFPERINTAH:
         AKTIFPERINTAH[message.chat.id] = {}
     AKTIFPERINTAH[
@@ -40,9 +46,10 @@ async def del_from_command_fn(client: Bot, message: Message):
     ][
         DEL_FROM_COMMAND
     ] = message.reply_to_message.message_id
-    await status_message.edit_text(
-        "saved starting message_id. "
-        "https://github.com/SpEcHiDe/DeleteMessagesRoBot"
-    )
+    if status_message:
+        await status_message.edit_text(
+            "saved starting message_id. "
+            "https://github.com/SpEcHiDe/DeleteMessagesRoBot"
+        )
+        await status_message.delete()
     await message.delete()
-    await status_message.delete()

@@ -16,6 +16,9 @@
 
 from pyrogram import filters
 from pyrogram.types import Message
+from pyrogram.errors import (
+    ChatAdminRequired
+)
 from bot import (
     BEGINNING_DEL_ALL_MESSAGE,
     DEL_ALL_COMMAND,
@@ -32,7 +35,12 @@ from bot.helpers.make_user_join_chat import make_chat_user_join
     allowed_chat_filter
 )
 async def del_all_command_fn(client: Bot, message: Message):
-    status_message = await message.reply_text(BEGINNING_DEL_ALL_MESSAGE)
+    try:
+        status_message = await message.reply_text(
+            BEGINNING_DEL_ALL_MESSAGE
+        )
+    except ChatAdminRequired:
+        status_message = None
 
     s__, nop = await make_chat_user_join(
         client.USER,
@@ -40,19 +48,22 @@ async def del_all_command_fn(client: Bot, message: Message):
         message
     )
     if not s__:
-        await status_message.edit_text(
-            IN_CORRECT_PERMISSIONS_MESSAGE.format(
-                nop
-            ),
-            disable_web_page_preview=True
-        )
+        if status_message:
+            await status_message.edit_text(
+                IN_CORRECT_PERMISSIONS_MESSAGE.format(
+                    nop
+                ),
+                disable_web_page_preview=True
+            )
+        else:
+            await message.delete()
         return
 
     await get_messages(
         client.USER,
         message.chat.id,
         0,
-        status_message.message_id,
+        status_message.message_id if status_message else message.message_id,
         []
     )
 

@@ -1,4 +1,4 @@
-**/*.session
+**/*.session*
 config.env
 **/__pycache__
 *.log

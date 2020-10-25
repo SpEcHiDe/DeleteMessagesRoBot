@@ -16,6 +16,9 @@
 
 from pyrogram import filters
 from pyrogram.types import Message
+from pyrogram.errors import (
+    ChatAdminRequired
+)
 from bot import (
     AKTIFPERINTAH,
     BEGINNING_SEL_DEL_MESSAGE,
@@ -37,7 +40,12 @@ from bot.helpers.get_messages import get_messages
     allowed_chat_filter
 )
 async def del_selective_command_fn(client: Bot, message: Message):
-    status_message = await message.reply_text(BEGINNING_SEL_DEL_MESSAGE)
+    try:
+        status_message = await message.reply_text(
+            BEGINNING_SEL_DEL_MESSAGE
+        )
+    except ChatAdminRequired:
+        status_message = None
 
     s__, nop = await make_chat_user_join(
         client.USER,
@@ -45,12 +53,15 @@ async def del_selective_command_fn(client: Bot, message: Message):
         message
     )
     if not s__:
-        await status_message.edit_text(
-            IN_CORRECT_PERMISSIONS_MESSAGE.format(
-                nop
-            ),
-            disable_web_page_preview=True
-        )
+        if status_message:
+            await status_message.edit_text(
+                IN_CORRECT_PERMISSIONS_MESSAGE.format(
+                    nop
+                ),
+                disable_web_page_preview=True
+            )
+        else:
+            await message.delete()
         return
 
     flt_type = []
@@ -63,7 +74,10 @@ async def del_selective_command_fn(client: Bot, message: Message):
 
     current_selections = AKTIFPERINTAH.get(message.chat.id)
     if len(flt_type) == 0 and not current_selections:
-        await status_message.edit(NOT_USED_DEL_FROM_DEL_TO_MESSAGE)
+        if status_message:
+            await status_message.edit(NOT_USED_DEL_FROM_DEL_TO_MESSAGE)
+        else:
+            await message.delete()
         return
 
     try:
@@ -77,7 +91,7 @@ async def del_selective_command_fn(client: Bot, message: Message):
             DEL_TO_COMMAND
         )
     except AttributeError:
-        max_message_id = status_message.message_id
+        max_message_id = status_message.message_id if status_message else message.message_id
 
     await get_messages(
         client.USER,
@@ -88,7 +102,8 @@ async def del_selective_command_fn(client: Bot, message: Message):
     )
 
     try:
-        await status_message.delete()
+        if status_message:
+            await status_message.delete()
         await message.delete()
     except:
         pass
