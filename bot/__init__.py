@@ -43,6 +43,9 @@ TG_BOT_SESSION = get_config("TG_BOT_SESSION", "bot")
 # given the amount of sql data accesses,
 # and the way python asynchronous calls work.
 TG_BOT_WORKERS = int(get_config("TG_BOT_WORKERS", "4"))
+# add an auto sleep time,
+# in the Pyrogram Client
+TG_SLEEP_THRESHOLD = int(get_config("TG_SLEEP_THRESHOLD", 10))
 # path to store LOG files
 LOG_FILE_ZZGEVC = get_config("LOG_FILE_ZZGEVC", "MessageDeletErBot.log")
 # number of messages that can be deleted in One Request, in Telegram

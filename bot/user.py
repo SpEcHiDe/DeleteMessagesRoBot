@@ -25,6 +25,7 @@ from . import (
     APP_ID,
     LOGGER,
     TG_BOT_WORKERS,
+    TG_SLEEP_THRESHOLD,
     TG_USER_SESSION
 )
 
@@ -37,7 +38,8 @@ class User(Client):
             TG_USER_SESSION,
             api_hash=API_HASH,
             api_id=APP_ID,
-            workers=TG_BOT_WORKERS
+            workers=TG_BOT_WORKERS,
+            sleep_threshold=TG_SLEEP_THRESHOLD
         )
         self.LOGGER = LOGGER
 

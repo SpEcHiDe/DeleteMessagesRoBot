@@ -42,6 +42,7 @@ async def make_chat_user_join(
     if not _existing_permissions.can_delete_messages:
         await message.chat.promote_member(
             user_id,
+            can_manage_chat=False,
             can_change_info=False,
             can_post_messages=False,
             can_edit_messages=False,
@@ -49,6 +50,7 @@ async def make_chat_user_join(
             can_restrict_members=False,
             can_invite_users=False,
             can_pin_messages=False,
-            can_promote_members=False
+            can_promote_members=False,
+            can_manage_voice_chats=False
         )
     return True, None

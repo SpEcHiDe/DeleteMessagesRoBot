@@ -26,7 +26,8 @@ from . import (
     LOGGER,
     TG_BOT_SESSION,
     TG_BOT_TOKEN,
-    TG_BOT_WORKERS
+    TG_BOT_WORKERS,
+    TG_SLEEP_THRESHOLD
 )
 from .user import User
 
@@ -45,7 +46,8 @@ class Bot(Client):
                 "root": "bot/plugins"
             },
             workers=TG_BOT_WORKERS,
-            bot_token=TG_BOT_TOKEN
+            bot_token=TG_BOT_TOKEN,
+            sleep_threshold=TG_SLEEP_THRESHOLD
         )
         self.LOGGER = LOGGER
 
