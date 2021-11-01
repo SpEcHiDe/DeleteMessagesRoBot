@@ -27,6 +27,8 @@ from bot import (
     IN_CORRECT_PERMISSIONS_MESSAGE,
     NOT_USED_DEL_FROM_DEL_TO_MESSAGE,
     SEL_DEL_COMMAND,
+    SHTL_BOT_HCAT_QO,
+    SHTL_USR_HCAT_QO,
     TL_FILE_TYPES
 )
 from bot.bot import Bot
@@ -91,7 +93,8 @@ async def del_selective_command_fn(client: Bot, message: Message):
             DEL_TO_COMMAND
         )
     except AttributeError:
-        max_message_id = status_message.message_id if status_message else message.message_id
+        max_message_id = status_message.message_id if \
+            status_message else message.message_id
 
     await get_messages(
         client.USER,
@@ -105,7 +108,7 @@ async def del_selective_command_fn(client: Bot, message: Message):
         if status_message:
             await status_message.delete()
         await message.delete()
-    except:
+    except:  # noqa: E722
         pass
 
     try:
@@ -114,5 +117,7 @@ async def del_selective_command_fn(client: Bot, message: Message):
         pass
 
     # leave the chat, after task is done
-    await client.USER.leave_chat(message.chat.id)
-    await client.leave_chat(message.chat.id)
+    if SHTL_USR_HCAT_QO:
+        await client.USER.leave_chat(message.chat.id)
+    if SHTL_BOT_HCAT_QO:
+        await client.leave_chat(message.chat.id)

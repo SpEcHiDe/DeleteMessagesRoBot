@@ -50,6 +50,9 @@ TG_MAX_SEL_MESG = int(get_config("TG_MAX_SEL_MESG", 99))
 TG_MIN_SEL_MESG = int(get_config("TG_MIN_SEL_MESG", 0))
 # a dictionary to store the currently running processes
 AKTIFPERINTAH = {}
+# should the user / bot leave the chat after finishing tasks
+SHTL_USR_HCAT_QO = bool(get_config("SHTL_USR_HCAT_QO", False))
+SHTL_BOT_HCAT_QO = bool(get_config("SHTL_BOT_HCAT_QO", False))
 
 
 logging.basicConfig(
@@ -77,7 +80,8 @@ REQD_PERMISSIONS = "https://t.me/SpEcHlDe/857"
 GIT_REPO_LINK = "https://github.com/SpEcHiDe/DeleteMessagesRoBot"
 """ strings to be used in the bot """
 START_MESSAGE = get_config("START_MESSAGE", (
-    "I'm a bot that can delete <s>all</s> your channel or supergroup messages. "
+    "I'm a bot that can delete <s>all</s> "
+    "your channel or supergroup messages. "
     "\n\n"
     f"To use me: read 👉 {REQD_PERMISSIONS} 👈"
     "\n\n"

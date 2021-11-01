@@ -1,4 +1,4 @@
-Pyrogram==1.0.7
-TgCrypto==1.2.1
+Pyrogram==1.2.9
+TgCrypto==1.2.2
 
 python-dotenv>=0.10

@@ -22,7 +22,9 @@ from pyrogram.errors import (
 from bot import (
     BEGINNING_DEL_ALL_MESSAGE,
     DEL_ALL_COMMAND,
-    IN_CORRECT_PERMISSIONS_MESSAGE
+    IN_CORRECT_PERMISSIONS_MESSAGE,
+    SHTL_BOT_HCAT_QO,
+    SHTL_USR_HCAT_QO
 )
 from bot.bot import Bot
 from bot.helpers.custom_filter import allowed_chat_filter
@@ -68,5 +70,7 @@ async def del_all_command_fn(client: Bot, message: Message):
     )
 
     # leave the chat, after task is done
-    await client.USER.leave_chat(message.chat.id)
-    await client.leave_chat(message.chat.id)
+    if SHTL_USR_HCAT_QO:
+        await client.USER.leave_chat(message.chat.id)
+    if SHTL_BOT_HCAT_QO:
+        await client.leave_chat(message.chat.id)
