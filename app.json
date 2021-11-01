@@ -29,11 +29,9 @@
             "description": "Create a PyroGram User Session, using https://generatestringsession.spechide.repl.run/"
         }
     },
-    "buildpacks": [
-        {
-            "url": "heroku/python"
-        }
-    ],
+    "buildpacks": [{
+        "url": "heroku/python"
+    }],
     "formation": {
         "worker": {
             "quantity": 1,
