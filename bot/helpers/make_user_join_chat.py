@@ -30,8 +30,9 @@ async def make_chat_user_join(
     message: Message
 ):
     chat_invite_link = await message.chat.export_invite_link()
+    izciul = chat_invite_link.replace("/+", "/joinchat/")
     try:
-        await client.join_chat(chat_invite_link)
+        await client.join_chat(izciul)
     except UserAlreadyParticipant:
         pass
     except (InviteHashExpired, InviteHashInvalid) as e:
