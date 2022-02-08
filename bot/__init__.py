@@ -114,6 +114,12 @@ NOT_USED_DEL_FROM_DEL_TO_MESSAGE = get_config(
         f"before using /{SEL_DEL_COMMAND}"
     )
 )
+THANK_YOU_MESSAGE = get_config(
+    "THANK_YOU_MESSAGE", (
+        "Thank You for using me, "
+        f"Join {REQD_PERMISSIONS} to support this Telegram Bot"
+    )
+)
 TL_FILE_TYPES = (
     "photo",
     "animation",
