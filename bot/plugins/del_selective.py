@@ -29,6 +29,7 @@ from bot import (
     SEL_DEL_COMMAND,
     SHTL_BOT_HCAT_QO,
     SHTL_USR_HCAT_QO,
+    THANK_YOU_MESSAGE,
     TL_FILE_TYPES
 )
 from bot.bot import Bot
@@ -121,3 +122,10 @@ async def del_selective_command_fn(client: Bot, message: Message):
         await client.USER.leave_chat(message.chat.id)
     if SHTL_BOT_HCAT_QO:
         await client.leave_chat(message.chat.id)
+
+    # edit with channel message ads,
+    # after process is completed
+    if status_message:
+        await status_message.edit_text(
+            THANK_YOU_MESSAGE
+        )

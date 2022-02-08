@@ -24,7 +24,8 @@ from bot import (
     DEL_ALL_COMMAND,
     IN_CORRECT_PERMISSIONS_MESSAGE,
     SHTL_BOT_HCAT_QO,
-    SHTL_USR_HCAT_QO
+    SHTL_USR_HCAT_QO,
+    THANK_YOU_MESSAGE
 )
 from bot.bot import Bot
 from bot.helpers.custom_filter import allowed_chat_filter
@@ -74,3 +75,10 @@ async def del_all_command_fn(client: Bot, message: Message):
         await client.USER.leave_chat(message.chat.id)
     if SHTL_BOT_HCAT_QO:
         await client.leave_chat(message.chat.id)
+
+    # edit with channel message ads,
+    # after process is completed
+    if status_message:
+        await status_message.edit_text(
+            THANK_YOU_MESSAGE
+        )
