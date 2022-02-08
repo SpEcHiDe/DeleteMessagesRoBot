@@ -16,9 +16,6 @@
 
 from pyrogram import filters
 from pyrogram.types import Message
-from pyrogram.errors import (
-    ChatAdminRequired
-)
 from bot import (
     BEGINNING_DEL_ALL_MESSAGE,
     THANK_YOU_MESSAGE,
