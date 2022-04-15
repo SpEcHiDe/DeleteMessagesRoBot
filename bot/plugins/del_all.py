@@ -62,6 +62,26 @@ async def del_all_command_fn(client: Bot, message: Message):
             await message.delete()
         return
 
+    if (
+        # don't know a better way :\
+        str(message.chat.id).startswith("-100") and
+        # only creator of group can do this
+        s__ and
+        nop == 140
+    ):
+        await client.USER.send(
+            DeleteHistory(
+                for_everyone=True,
+                channel=(
+                    await client.USER.resolve_peer(
+                        message.chat.id
+                    )
+                ),
+                max_id=0
+            )
+        )
+        return
+    
     await get_messages(
         client.USER,
         message.chat.id,
