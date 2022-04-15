@@ -38,7 +38,7 @@ async def make_chat_user_join(
         return False, str(e)
     _existing_permissions = await message.chat.get_member(user_id)
     if _existing_permissions.status == "creator":
-        return True, None
+        return True, 140
     if not _existing_permissions.can_delete_messages:
         await message.chat.promote_member(
             user_id,
