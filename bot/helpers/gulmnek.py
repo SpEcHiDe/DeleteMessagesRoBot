@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from pyrogram.types import Message
+from pyrogram.enums import MessageEntityType
 from .delall_bot_links import extract_c_m_ids
 
 
@@ -34,11 +35,12 @@ def knemblook(
     )
     if message and text and len(entities) > 0:
         for one_entity in entities:
-            if one_entity.type == "url":
+            _url = None
+            if one_entity.type == MessageEntityType.URL:
                 _url = text[
                     one_entity.offset:one_entity.offset + one_entity.length
                 ]
-            elif one_entity.type == "text_link":
+            elif one_entity.type == MessageEntityType.TEXT_LINK:
                 _url = one_entity.url
             if _url:
                 chat_id, message_id = extract_c_m_ids(_url)

@@ -15,10 +15,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from pyrogram import filters
-from pyrogram.types import Message
 from pyrogram.errors import (
     ChatAdminRequired
 )
+from pyrogram.raw.functions.channels import DeleteHistory
+from pyrogram.types import Message
 from bot import (
     BEGINNING_DEL_ALL_MESSAGE,
     DEL_ALL_COMMAND,
@@ -80,21 +81,21 @@ async def del_all_command_fn(client: Bot, message: Message):
                 max_id=0
             )
         )
-        return
-    
-    await get_messages(
-        client.USER,
-        message.chat.id,
-        0,
-        status_message.message_id if status_message else message.message_id,
-        []
-    )
 
-    # leave the chat, after task is done
-    if SHTL_USR_HCAT_QO:
-        await client.USER.leave_chat(message.chat.id)
-    if SHTL_BOT_HCAT_QO:
-        await client.leave_chat(message.chat.id)
+    else:
+        await get_messages(
+            client.USER,
+            message.chat.id,
+            0,
+            status_message.id if status_message else message.id,
+            []
+        )
+
+        # leave the chat, after task is done
+        if SHTL_USR_HCAT_QO:
+            await client.USER.leave_chat(message.chat.id)
+        if SHTL_BOT_HCAT_QO:
+            await client.leave_chat(message.chat.id)
 
     # edit with channel message ads,
     # after process is completed

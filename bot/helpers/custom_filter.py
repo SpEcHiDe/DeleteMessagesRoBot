@@ -15,11 +15,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from pyrogram import filters
+from pyrogram.enums import ChatType
 from pyrogram.types import Message
 
 
 async def allowed_chat_filter_fn(_, __, m: Message):
-    return bool(m.chat and m.chat.type in {"channel", "supergroup"})
+    return bool(m.chat and m.chat.type in [ChatType.CHANNEL, ChatType.SUPERGROUP])
 
 
 allowed_chat_filter = filters.create(allowed_chat_filter_fn)

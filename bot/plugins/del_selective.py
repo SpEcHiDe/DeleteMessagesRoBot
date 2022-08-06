@@ -94,8 +94,8 @@ async def del_selective_command_fn(client: Bot, message: Message):
             DEL_TO_COMMAND
         )
     except AttributeError:
-        max_message_id = status_message.message_id if \
-            status_message else message.message_id
+        max_message_id = status_message.id if \
+            status_message else message.id
 
     await get_messages(
         client.USER,
@@ -108,6 +108,7 @@ async def del_selective_command_fn(client: Bot, message: Message):
     try:
         if status_message:
             await status_message.delete()
+            status_message = None
         await message.delete()
     except:  # noqa: E722
         pass

@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-
+from asyncio import sleep
 from pyrogram.errors import (
     InviteHashExpired,
     InviteHashInvalid,
     UserAlreadyParticipant
 )
+from pyrogram.enums import ChatMemberStatus
 from pyrogram.types import Message
 from bot.bot import Bot
 
@@ -36,8 +37,9 @@ async def make_chat_user_join(
         pass
     except (InviteHashExpired, InviteHashInvalid) as e:
         return False, str(e)
+    await sleep(7)
     _existing_permissions = await message.chat.get_member(user_id)
-    if _existing_permissions.status == "creator":
+    if _existing_permissions.status == ChatMemberStatus.OWNER:
         return True, 140
     if not _existing_permissions.can_delete_messages:
         await message.chat.promote_member(

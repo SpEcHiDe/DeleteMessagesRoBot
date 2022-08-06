@@ -36,16 +36,16 @@ async def get_messages(
         limit=None
     ):
         if (
-            min_message_id <= msg.message_id and
-            max_message_id >= msg.message_id
+            min_message_id <= msg.id and
+            max_message_id >= msg.id
         ):
             if len(filter_type_s) > 0:
                 for filter_type in filter_type_s:
                     obj = getattr(msg, filter_type)
                     if obj:
-                        messages_to_delete.append(msg.message_id)
+                        messages_to_delete.append(msg.id)
             else:
-                messages_to_delete.append(msg.message_id)
+                messages_to_delete.append(msg.id)
         # append to the list, based on the condition
         if len(messages_to_delete) > TG_MAX_SEL_MESG:
             await mass_delete_messages(

@@ -45,7 +45,7 @@ async def del_to_command_fn(client: Bot, message: Message):
         message.chat.id
     ][
         DEL_TO_COMMAND
-    ] = message.reply_to_message.message_id
+    ] = message.reply_to_message.id
     if status_message:
         await status_message.edit_text(
             "saved ending message_id. "

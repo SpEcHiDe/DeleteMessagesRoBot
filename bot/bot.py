@@ -20,6 +20,7 @@ from pyrogram import (
     Client,
     __version__
 )
+from pyrogram.enums import ParseMode
 from . import (
     API_HASH,
     APP_ID,
@@ -34,33 +35,41 @@ from .user import User
 
 class Bot(Client):
     """ modded client for MessageDeletERoBot """
+    BOT_ID: int = None
     USER: User = None
     USER_ID: int = None
 
     def __init__(self):
         super().__init__(
-            TG_BOT_SESSION,
+            name=TG_BOT_SESSION,
             api_hash=API_HASH,
             api_id=APP_ID,
             plugins={
-                "root": "bot/plugins"
+                "root": "bot.plugins",
+                "exclude": [
+                    "oatc"
+                ]
             },
             workers=TG_BOT_WORKERS,
             bot_token=TG_BOT_TOKEN,
-            sleep_threshold=TG_SLEEP_THRESHOLD
+            sleep_threshold=TG_SLEEP_THRESHOLD,
+            parse_mode=ParseMode.HTML
         )
         self.LOGGER = LOGGER
 
     async def start(self):
         await super().start()
-        usr_bot_me = await self.get_me()
-        self.set_parse_mode("html")
+        usr_bot_me = self.me
+        self.BOT_ID = usr_bot_me.id
         self.LOGGER(__name__).info(
             f"@{usr_bot_me.username} based on Pyrogram v{__version__} "
         )
         self.USER, self.USER_ID = await User().start()
         # hack to get the entities in-memory
-        await self.USER.send_message(usr_bot_me.username, "this is a hack")
+        await self.USER.send_message(
+            usr_bot_me.username,
+            "join https://t.me/SpEcHlDe/857"
+        )
 
     async def stop(self, *args):
         await super().stop()
