@@ -19,7 +19,10 @@ from pyrogram.errors import (
     ChatAdminRequired
 )
 from pyrogram.raw.functions.channels import DeleteHistory
-from pyrogram.types import Message
+from pyrogram.types import (
+    Message,
+    LinkPreviewOptions
+)
 from bot import (
     BEGINNING_DEL_ALL_MESSAGE,
     DEL_ALL_COMMAND,
@@ -41,7 +44,7 @@ from bot.helpers.make_user_join_chat import make_chat_user_join
 async def del_all_command_fn(client: Bot, message: Message):
     try:
         status_message = await message.reply_text(
-            BEGINNING_DEL_ALL_MESSAGE
+            text=BEGINNING_DEL_ALL_MESSAGE
         )
     except ChatAdminRequired:
         status_message = None
@@ -54,10 +57,12 @@ async def del_all_command_fn(client: Bot, message: Message):
     if not s__:
         if status_message:
             await status_message.edit_text(
-                IN_CORRECT_PERMISSIONS_MESSAGE.format(
+                text=IN_CORRECT_PERMISSIONS_MESSAGE.format(
                     nop
                 ),
-                disable_web_page_preview=True
+                link_preview_options=LinkPreviewOptions(
+                    is_disabled=True
+                ),
             )
         else:
             await message.delete()
@@ -101,5 +106,5 @@ async def del_all_command_fn(client: Bot, message: Message):
     # after process is completed
     if status_message:
         await status_message.edit_text(
-            THANK_YOU_MESSAGE
+            text=THANK_YOU_MESSAGE
         )

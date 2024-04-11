@@ -21,7 +21,10 @@ from pyrogram.errors import (
     UserAlreadyParticipant
 )
 from pyrogram.enums import ChatMemberStatus
-from pyrogram.types import Message
+from pyrogram.types import (
+    Message,
+    ChatPrivileges
+)
 from bot.bot import Bot
 
 
@@ -44,15 +47,8 @@ async def make_chat_user_join(
     if not _existing_permissions.can_delete_messages:
         await message.chat.promote_member(
             user_id,
-            can_manage_chat=False,
-            can_change_info=False,
-            can_post_messages=False,
-            can_edit_messages=False,
-            can_delete_messages=True,
-            can_restrict_members=False,
-            can_invite_users=False,
-            can_pin_messages=False,
-            can_promote_members=False,
-            can_manage_voice_chats=False
+            ChatPrivileges(
+                can_delete_messages=True
+            )
         )
     return True, None

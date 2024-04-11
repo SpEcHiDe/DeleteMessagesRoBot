@@ -15,7 +15,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import (
+    Message,
+    LinkPreviewOptions
+)
 from pyrogram.errors import (
     ChatAdminRequired
 )
@@ -45,7 +48,7 @@ from bot.helpers.get_messages import get_messages
 async def del_selective_command_fn(client: Bot, message: Message):
     try:
         status_message = await message.reply_text(
-            BEGINNING_SEL_DEL_MESSAGE
+            text=BEGINNING_SEL_DEL_MESSAGE
         )
     except ChatAdminRequired:
         status_message = None
@@ -58,10 +61,12 @@ async def del_selective_command_fn(client: Bot, message: Message):
     if not s__:
         if status_message:
             await status_message.edit_text(
-                IN_CORRECT_PERMISSIONS_MESSAGE.format(
+                text=IN_CORRECT_PERMISSIONS_MESSAGE.format(
                     nop
                 ),
-                disable_web_page_preview=True
+                link_preview_options=LinkPreviewOptions(
+                    is_disabled=True
+                ),
             )
         else:
             await message.delete()
@@ -78,7 +83,7 @@ async def del_selective_command_fn(client: Bot, message: Message):
     current_selections = AKTIFPERINTAH.get(message.chat.id)
     if len(flt_type) == 0 and not current_selections:
         if status_message:
-            await status_message.edit(NOT_USED_DEL_FROM_DEL_TO_MESSAGE)
+            await status_message.edit(text=NOT_USED_DEL_FROM_DEL_TO_MESSAGE)
         else:
             await message.delete()
         return
@@ -128,5 +133,5 @@ async def del_selective_command_fn(client: Bot, message: Message):
     # after process is completed
     if status_message:
         await status_message.edit_text(
-            THANK_YOU_MESSAGE
+            text=THANK_YOU_MESSAGE
         )

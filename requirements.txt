@@ -1,4 +1,4 @@
-Pyrogram==2.0.35
-TgCrypto==1.2.3
+https://github.com/TelegramPlayGround/Pyrogram/archive/8079c1b.zip
+TgCrypto==1.2.5
 
-python-dotenv>=0.10
+python-dotenv==0.10

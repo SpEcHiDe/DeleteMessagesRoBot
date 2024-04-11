@@ -47,9 +47,9 @@ from bot.helpers.make_user_join_chat import make_chat_user_join
     )
 )
 async def dmca_spec_del_nf(client: Bot, message: Message):
-    bot_id = await client.get_me()
+    bot_id = client.me
     status_message = await message.reply_text(
-        BEGINNING_DEL_ALL_MESSAGE,
+        text=BEGINNING_DEL_ALL_MESSAGE,
         quote=True
     )
     all_id_stores_ = knemblook(message)
@@ -61,7 +61,7 @@ async def dmca_spec_del_nf(client: Bot, message: Message):
         qbo = check_perm(client, chat_id, bot_id)
         if not qbo:
             await status_message.reply_text(
-                IN_CORRECT_PERMISSIONS_MESSAGE,
+                text=IN_CORRECT_PERMISSIONS_MESSAGE,
                 quote=True
             )
             continue
@@ -92,5 +92,5 @@ async def dmca_spec_del_nf(client: Bot, message: Message):
             await client.leave_chat(chat_id)
 
     await status_message.edit_text(
-        THANK_YOU_MESSAGE
+        text=THANK_YOU_MESSAGE
     )
